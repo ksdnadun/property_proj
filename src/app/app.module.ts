@@ -1,8 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-
+import { AgmCoreModule } from '@agm/core';
 import { AppComponent } from './app.component';
+import {PropertyModule} from './property/property.module';
 
 
 @NgModule({
@@ -10,7 +11,8 @@ import { AppComponent } from './app.component';
     AppComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    PropertyModule
   ],
   providers: [],
   bootstrap: [AppComponent]
