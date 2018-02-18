@@ -1,3 +1,35 @@
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
 agm-map {
-  height: 300px;
+  height: 500px;
+  width: 100%;
 }
+
+#searchBox{
+  width: 300px;
+  height: 200px;
+  /*background-color: #637783;*/
+}
+
+.searchText{
+  background-color: #e8eff0;
+  border: 1px solid #e8eff0;
+  border-radius: 4px;
+}
+
+mat-slider {
+  width: 300px;
+}
+
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+
