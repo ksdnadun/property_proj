@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TopbarComponent } from '../../shared/topbar/topbar.component';
 
 @Component({
   selector: 'app-search-property',

@@ -10,6 +10,9 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatInputModule} from '@angular/material';
 import {MatSelectModule} from '@angular/material/select';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {BrowserModule} from '@angular/platform-browser';
+import {SharedModule} from '../shared/shared.module';
 
 @NgModule({
   imports: [
@@ -17,15 +20,20 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     NgbModule,
     CommonModule,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyCZliFoDs1ab_HzAdrnjaE2JcIvW4iROUI'
+      apiKey: 'AIzaSyCZliFoDs1ab_HzAdrnjaE2JcIvW4iROUI',
+      libraries: ['places']
     }),
+    BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     MatSliderModule,
     MatInputModule,
     MatSelectModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    SharedModule
   ],
   declarations: [SearchPropertyComponent, SearchMapComponent],
-  exports: [ SearchMapComponent, MatSliderModule, MatSelectModule, MatAutocompleteModule ]
+  exports: [ SearchMapComponent, MatSliderModule, MatSelectModule, MatAutocompleteModule, SharedModule, SearchPropertyComponent ]
 })
 export class PropertyModule { }

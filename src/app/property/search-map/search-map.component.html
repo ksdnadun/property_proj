@@ -1,38 +1,41 @@
 <div class="container-fluid">
-  <h1>{{ title }}</h1>
 
-  <agm-map [latitude]="lat" [longitude]="lng" [zoom] = "15">
-    <agm-marker [latitude]="lat" [longitude]="lng" [markerDraggable] = "true">
-      <agm-info-window [isOpen] = "true">
-        <div id="searchBox">
+    <div class="form-group">
+      <input placeholder="search for location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text"
+             class="form-control" #search [formControl]="searchControl">
+    </div>
+    <agm-map [latitude]="lat" [longitude]="lng" [scrollwheel]="false" [zoom]="zoom" >
+      <agm-marker [latitude]="lat" [longitude]="lng" title="Search Center" iconUrl="../../../assets/images/pointImages/icon-6.png">
+        <agm-info-window [isOpen]="false" >
+          <div id="searchBox">
+            <mat-form-field>
+              <mat-select placeholder="Select Property Type">
+                <mat-option *ngFor="let food of searchParameters" [value]="food.value">
+                  {{ food.viewValue }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
 
-          <mat-form-field>
-            <mat-select placeholder="Select Property Type">
-              <mat-option *ngFor="let food of searchParameters" [value]="food.value">
-                {{ food.viewValue }}
+            <br>
+
+
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let option of options" [value]="option">
+                {{ option }}
               </mat-option>
-            </mat-select>
-          </mat-form-field>
+            </mat-autocomplete>
 
-          <br>
+            <br>
 
-          <input type="text" placeholder="Enter Town" aria-label="Number" matInput [matAutocomplete]="auto">
-          <mat-autocomplete #auto="matAutocomplete">
-            <mat-option *ngFor="let option of options" [value]="option">
-              {{ option }}
-            </mat-option>
-          </mat-autocomplete>
-
-          <br>
-
-          <mat-slider [min]="1" [max]="20" step="0.5" value="1.5" thumbLabel tickInterval="1"></mat-slider>
+            <mat-slider [min]="1" [max]="20" step="0.5" value="1.5" thumbLabel tickInterval="1" (change)="changeCircle(this)" #slider></mat-slider>
 
 
-        </div>
-      </agm-info-window>
-    </agm-marker>
-    <agm-circle [latitude]="lat" [longitude]="lng" [radius] = "1000"></agm-circle>
+          </div>
+        </agm-info-window>
+      </agm-marker>
 
-  </agm-map>
+      <agm-circle [latitude]="lat" [longitude]="lng" [radius] = "distanceRadius"></agm-circle>
+
+    </agm-map>
 
 </div>

@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, NgZone, OnInit, ViewChild} from '@angular/core';
 import 'hammerjs';
+import {MapsAPILoader} from '@agm/core';
+import {FormControl} from '@angular/forms';
+import { } from 'googlemaps';
 
 @Component({
   selector: 'app-search-map',
@@ -8,10 +11,19 @@ import 'hammerjs';
 })
 export class SearchMapComponent implements OnInit {
 
-  title: string = 'My first AGM project';
+
+  @ViewChild('search')
+  public searchElementRef: ElementRef;
+
+  @ViewChild('slider')
+  private distanceSlider: ElementRef;
+
+  public searchControl: FormControl;
+  public zoom: number;
+
   lat: number = 6.8018027;
   lng: number = 79.92268409999997;
-  searchIconUrl: string = "https://www.iconfinder.com/icons/452864/building_explore_find_home_house_real_estate_realty_search_icon"
+  distanceRadius: number;
 
   searchParameters = [
     {value: 'Bare Lands', viewValue: 'bareLands'},
@@ -19,9 +31,58 @@ export class SearchMapComponent implements OnInit {
     {value: 'For Rent', viewValue: 'forRent'}
   ];
 
-  constructor() { }
+  constructor(
+    private mapsAPILoader: MapsAPILoader,
+    private ngZone: NgZone
+  ) { }
 
   ngOnInit() {
+    // create search FormControl
+    this.searchControl = new FormControl();
+
+    // set current position
+    this.setCurrentPosition();
+
+    // load Places Autocomplete
+    this.mapsAPILoader.load().then(() => {
+      let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
+        types: ['address']
+      });
+
+      autocomplete.addListener('place_changed', () => {
+        this.ngZone.run(() => {
+          // get the place result
+          let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+
+          // verify result
+          if (place.geometry === undefined || place.geometry === null) {
+            return;
+          }
+
+          // set latitude, longitude and zoom
+          this.lat = place.geometry.location.lat();
+          this.lng = place.geometry.location.lng();
+          this.zoom = 12;
+        });
+      });
+    });
+
   }
+
+  private setCurrentPosition() {
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.lat = position.coords.latitude;
+        this.lng = position.coords.longitude;
+        this.zoom = 12;
+      });
+    }
+  }
+
+  changeCircle(element) {
+    this.distanceRadius = this.distanceSlider.displayValue * 500;
+  }
+
+
 
 }
