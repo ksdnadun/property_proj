@@ -27,14 +27,18 @@
 
             <br>
 
-            <mat-slider [min]="1" [max]="20" step="0.5" value="1.5" thumbLabel tickInterval="1" (change)="changeCircle(this)" #slider></mat-slider>
-
+            <mat-slider [min]="1" [max]="20" step="0.5" value="1.5" thumbLabel tickInterval="1"  #slider (change)="changeCircle(this)"></mat-slider>
+            <!--(change)="changeCircle(this)"-->
 
           </div>
         </agm-info-window>
       </agm-marker>
 
       <agm-circle [latitude]="lat" [longitude]="lng" [radius] = "distanceRadius"></agm-circle>
+
+      <!--<agm-marker *ngFor="let searchedProperty of searchData" [longitude]="searchedProperty.lan" [latitude]="searchedProperty.lat" >-->
+
+      <!--</agm-marker>-->
 
     </agm-map>
 

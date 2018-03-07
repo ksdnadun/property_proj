@@ -13,6 +13,8 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserModule} from '@angular/platform-browser';
 import {SharedModule} from '../shared/shared.module';
+import {HttpClientModule} from '@angular/common/http';
+import {SearchService} from './search.service';
 
 @NgModule({
   imports: [
@@ -31,9 +33,11 @@ import {SharedModule} from '../shared/shared.module';
     MatInputModule,
     MatSelectModule,
     MatAutocompleteModule,
+    HttpClientModule,
     SharedModule
   ],
   declarations: [SearchPropertyComponent, SearchMapComponent],
-  exports: [ SearchMapComponent, MatSliderModule, MatSelectModule, MatAutocompleteModule, SharedModule, SearchPropertyComponent ]
+  providers: [SearchService],
+  exports: [ SearchMapComponent, MatSliderModule, MatSelectModule, MatAutocompleteModule, SharedModule, SearchPropertyComponent, HttpClientModule ]
 })
 export class PropertyModule { }

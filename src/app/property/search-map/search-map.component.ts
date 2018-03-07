@@ -2,7 +2,11 @@ import {Component, ElementRef, NgZone, OnInit, ViewChild} from '@angular/core';
 import 'hammerjs';
 import {MapsAPILoader} from '@agm/core';
 import {FormControl} from '@angular/forms';
-import { } from 'googlemaps';
+import {} from '@types/googlemaps';
+import {SearchService} from '../search.service';
+import {Property} from '../Property';
+//import { } from 'googlemaps';
+
 
 @Component({
   selector: 'app-search-map',
@@ -23,7 +27,7 @@ export class SearchMapComponent implements OnInit {
 
   lat: number = 6.8018027;
   lng: number = 79.92268409999997;
-  distanceRadius: number;
+  distanceRadius: number ;
 
   searchParameters = [
     {value: 'Bare Lands', viewValue: 'bareLands'},
@@ -31,9 +35,14 @@ export class SearchMapComponent implements OnInit {
     {value: 'For Rent', viewValue: 'forRent'}
   ];
 
+  options = [];
+
+  searchData: Property[];
+
   constructor(
     private mapsAPILoader: MapsAPILoader,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private searchService: SearchService
   ) { }
 
   ngOnInit() {
@@ -45,6 +54,7 @@ export class SearchMapComponent implements OnInit {
 
     // load Places Autocomplete
     this.mapsAPILoader.load().then(() => {
+
       let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
         types: ['address']
       });
@@ -80,9 +90,12 @@ export class SearchMapComponent implements OnInit {
   }
 
   changeCircle(element) {
-    this.distanceRadius = this.distanceSlider.displayValue * 500;
+
+    this.distanceRadius =  1000;//this.distanceSlider.displayValue * 500;
+
+    this.searchService.getLocationSearchData(this.distanceRadius, this.lat, this.lng);
+
+
   }
-
-
 
 }
